@@ -1,9 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 import { connectDatabase } from "./helpers/database/connectDatabase.js";
-import { routers } from "./routers/index.js";
+import { router } from "./routers/index.js";
 import {
-  errorHandler,
+  customErrorHandlers,
   notFound,
 } from "./middlewares/errors/customErrorHandlers.js";
 
@@ -23,11 +23,11 @@ app.use(express.json());
 
 // routers middleware
 
-app.use("/api", routers);
+app.use("/api", router);
 
 // error handler
 
-app.use(errorHandler);
+app.use(customErrorHandlers);
 
 // notfound
 
