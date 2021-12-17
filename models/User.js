@@ -57,6 +57,19 @@ const UserSchema = new Schema({
   },
 });
 
+// user schema methods
+UserSchema.methods.generateJwtFromUser = function () {
+  const { JWT_SECRET_KEY, JWT_EXPIRE } = process.env;
+  const payload = {
+    id: this.id,
+    name: this.name,
+  };
+  const token = jwt.sign(payload, JWT_SECRET_KEY, {
+    expiresIn: JWT_EXPIRE,
+  });
+  return token;
+};
+
 const User = mongoose.model("User", UserSchema);
 
 export { User };

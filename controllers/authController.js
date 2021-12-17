@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import { User } from "../models/User.js";
+import { sentJwtToClient } from "../helpers/authorization/tokenHelpers.js";
 
 const registerUser = asyncHandler(async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -15,6 +16,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
     email,
     password,
   });
+  sentJwtToClient(user, res);
 
   if (user) {
     res.status(201).json({
