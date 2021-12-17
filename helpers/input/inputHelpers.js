@@ -1,5 +1,11 @@
+import bcrypt from "bcryptjs";
+
 const validateUserInput = (email, password) => {
   return email && password;
 };
 
-export { validateUserInput };
+const comparePassword = (password, hashedPassword) => {
+  return bcrypt.compareSync(password, hashedPassword);
+};
+
+export { validateUserInput, comparePassword };

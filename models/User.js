@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   name: {
@@ -69,6 +71,17 @@ UserSchema.methods.generateJwtFromUser = function () {
   });
   return token;
 };
+///////////////////////////////////////////////////////////////////////////////////////////
+UserSchema.pre("save", function (next) {
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) next(err);
+    bcrypt.hash(this.password, salt, (err, hash) => {
+      if (err) next(err);
+      this.password = hash;
+      next();
+    });
+  });
+});
 
 const User = mongoose.model("User", UserSchema);
 
