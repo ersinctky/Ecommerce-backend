@@ -10,9 +10,7 @@ import {
 const app = express();
 // environment variables
 
-dotenv.config({
-  path: "./config/config.env",
-});
+dotenv.config();
 
 // mongodb connection
 connectDatabase();
