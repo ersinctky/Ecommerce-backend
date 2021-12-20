@@ -1,5 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
+import path from "path";
+
 import { connectDatabase } from "./helpers/database/connectDatabase.js";
 import { router } from "./routers/index.js";
 import {
@@ -30,6 +32,11 @@ app.use(customErrorHandlers);
 // notfound
 
 app.use(notFound);
+
+// static files
+const __dirname = path.resolve();
+
+app.use(express.static(path.join(__dirname, "public")));
 
 const PORT = process.env.PORT;
 app.listen(

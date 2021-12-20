@@ -1,11 +1,9 @@
 import { CustomError } from "../../helpers/error/CustomError.js";
-import asyncErrorWraapper from "express-async-handler";
-import { User } from "../../models/User.js";
 import jwt from "jsonwebtoken";
 import {
   isTokenIncluded,
   getAccessTokenFromHeader,
-} from "../../helpers/authorization/tokenHelpers";
+} from "../../helpers/authorization/tokenHelpers.js";
 
 const getAccessToRoute = (req, res, next) => {
   const { JWT_SECRET_KEY } = process.env;
