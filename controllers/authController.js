@@ -49,4 +49,13 @@ const login = asyncErrorWraapper(async (req, res, next) => {
   sentJwtToClient(user, res);
 });
 
-export { registerUser, login };
+const logout = asyncErrorWraapper(async (req, res, next) => {
+  localStorage.removeItem();
+
+  return res.status(200).json({
+    success: true,
+    message: "Logout successful",
+  });
+});
+
+export { registerUser, login, logout };
