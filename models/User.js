@@ -71,7 +71,22 @@ UserSchema.methods.generateJwtFromUser = function () {
   });
   return token;
 };
+UserSchema.methods.getResetPasswordTokenFromUser = function () {
+  const randomHexString = crypto.randomBytes(15).toString("hex");
+  const { RESET_PASSWORD_EXPIRE } = process.env;
+  const resetPasswordToken = crypto
+    .createHash("SHA256")
+    .update(randomHexString)
+    .digest("hex");
+
+  (this.resetPasswordToken = resetPasswordToken),
+    (this.resetPasswordExpire = Date.now() + parseInt(RESET_PASSWORD_EXPIRE));
+
+  return resetPasswordToken;
+};
+
 ///////////////////////////////////////////////////////////////////////////////////////////
+
 UserSchema.pre("save", function (next) {
   bcrypt.genSalt(10, (err, salt) => {
     if (err) next(err);

@@ -35,7 +35,6 @@ app.use(notFound);
 
 // static files
 const __dirname = path.resolve();
-
 app.use(express.static(path.join(__dirname, "public")));
 
 const PORT = process.env.PORT;
