@@ -31,10 +31,8 @@ const getAccessToRoute = (req, res, next) => {
 const admin = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     next();
-  } else {
-    res.status(401);
-    throw new Error("Not authorized as an admin");
   }
+  return next(new CustomError("Not authorized as an admin", 401));
 };
 
 export { getAccessToRoute, admin };
