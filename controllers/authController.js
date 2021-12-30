@@ -22,17 +22,8 @@ const registerUser = asyncErrorWraapper(async (req, res, next) => {
     email,
     password,
   });
-  sentJwtToClient(user, res);
 
-  if (user) {
-    res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-    });
-  } else {
-    return next(new CustomError("please check your credentials", 400));
-  }
+  sentJwtToClient(user, res);
 });
 
 const login = asyncErrorWraapper(async (req, res, next) => {
@@ -48,15 +39,6 @@ const login = asyncErrorWraapper(async (req, res, next) => {
     return next(new CustomError("please check your credentials", 400));
   }
   sentJwtToClient(user, res);
-});
-
-const logout = asyncErrorWraapper(async (req, res, next) => {
-  localStorage.removeItem();
-
-  return res.status(200).json({
-    success: true,
-    message: "Logout successful",
-  });
 });
 
 const imageUpload = asyncErrorWraapper(async (req, res, next) => {
@@ -153,11 +135,4 @@ const resetPassword = asyncErrorWraapper(async (req, res, next) => {
   });
 });
 
-export {
-  registerUser,
-  login,
-  logout,
-  imageUpload,
-  forgotPassword,
-  resetPassword,
-};
+export { registerUser, login, imageUpload, forgotPassword, resetPassword };
